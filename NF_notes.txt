@@ -1,0 +1,71 @@
+https://www.interviewbit.com/sql-interview-questions/
+First Normal Form: A relation is in first normal form if every attribute in that relation is a single-valued attribute
+Second Normal Form: A relation is in second normal form if it satisfies the conditions for first normal form and does not contain any partial dependency. A relation in 2NF has no partial dependency
+Third Normal Form: A relation is said to be in the third normal form, if it satisfies the conditions for second normal form and there is no transitive dependency between the non-prime attributes
+Boyce-Codd Normal Form:A relation is in Boyce-Codd Normal Form if satisfies the conditions for third normal form and for every functional dependency, Left-Hand-Side is super key. In other words, a relation in BCNF has non-trivial functional dependencies in the form X –> Y, such that X is always a super key.
+Good example : https://www.vertabelo.com/blog/boyce-codd-normal-form-bcnf/
+
+https://blog.csdn.net/qq_31780525/article/details/54416320
+
+2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。
+3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。也就是说， 如果存在非主属性对于码的传递函数依赖，则不符合3NF的要求。
+
+BCNF范式
+解决办法就是要在 3NF 的基础上消除主属性对于码的部分与传递函数依赖。
+
+-------------
+一范式就是属性不可分割。属性是什么？就是表中的字段。
+不可分割的意思就按字面理解就是最小单位，不能再分成更小单位了。
+这个字段只能是一个值，不能被拆分成多个字段，否则的话，它就是可分割的，就不符合一范式。
+不过能不能分割并没有绝对的答案，看需求，也就是看你的设计目标而定。
+举例：
+学生信息组成学生信息表，有姓名、年龄、性别、学号等信息组成。
+姓名不可拆分吧？所以可以作为该表的一个字段。
+但我要说这个表要在国外使用呢？人家姓和名要分开，都有特别的意义，所以姓名字段是可拆分的，分为姓字段和名字段。
+简单来说，一范式是关系数据库的基础，但字段是否真的不可拆分，根据你的设计目标而定。
+
+二范式就是要有主键，要求其他字段都依赖于主键。
+为什么要有主键？没有主键就没有唯一性，没有唯一性在集合中就定位不到这行记录，所以要主键。
+其他字段为什么要依赖于主键？因为不依赖于主键，就找不到他们。更重要的是，其他字段组成的这行记录和主键表示的是同一个东西，而主键是唯一的，它们只需要依赖于主键，也就成了唯一的。
+如果有同学不理解依赖这个词，可以勉强用“相关”这个词代替，也就是说其他字段必须和它们的主键相关。因为不相关的东西不应该放在一行记录里。
+举例：
+学生信息组成学生表，姓名可以做主键么？
+不能！因为同名的话，就不唯一了，所以需要学号这样的唯一编码才行。
+那么其他字段依赖于主键是什么意思？
+就是“张三”同学的年龄和性别等字段，不能存储别人的年龄性别，必须是他自己的，因为张三的学号信息就决定了，这行记录归张三所有，不能给无关人员使用。
+
+三范式就是要消除传递依赖，方便理解，可以看做是“消除冗余”。
+消除冗余应该比较好理解一些，就是各种信息只在一个地方存储，不出现在多张表中。
+比如说大学分了很多系（中文系、英语系、计算机系……），这个系别管理表信息有以下字段组成：
+系编号，系主任，系简介，系架构。
+那么再回到学生信息表，张三同学的年龄、性别、学号都有了，我能不能把他的系编号，系主任、系简介也一起存着？
+如果你问三范式，当然不行，因为三范式不同意。
+因为系编号，系主任、系简介已经存在系别管理表中，你再存入学生信息表，就是冗余了。
+三范式中说的传递依赖，就出现了。
+这个时候学生信息表中，系主任信息是不是依赖于系编号了？而这个表的主键可是学号啊！
+所以按照三范式，处理这个问题的时候，学生表就只能增加一个系编号字段。
+这样既能根据系编号找到系别信息，又避免了冗余存储的问题。
+
+
+总结：
+1NF： 字段是最小的的单元不可再分
+2NF：满足1NF,表中的字段必须完全依赖于全部主键而非部分主键 (一般我们都会做到)
+3NF：满足2NF,非主键外的所有字段必须互不依赖
+4NF：满足3NF,消除表中的多值依赖1NF要求属性不可再拆分，最原子级；
+2NF包含1，并要求有主键；
+3NF包含2，且消除冗余数据；
+
+给个简洁的判断方法：
+
+1NF：每个数据项都是最小单元，不可分割，其实就是确定行列之后只能对应一个数据，形象点就是你不对Exel作拆分单元格。 其实数据库管理系统生成的最起码也是第一范式。
+2NF：非主属性不部分依赖于候选码
+3NF：非主属性不传递依赖于候选码
+BCNF：在满足第二第三范式的情况下，主属性内部也不能部分或传递依赖。判断方法：箭头左边的必须是候选码，不是候选码的就不是BC范式。
+4NF 没有多值依赖
+1NF要求属性不可再拆分，最原子级；
+2NF包含1，并要求有主键；
+3NF包含2，且消除冗余数据；
+
+1NF：所有属性都必须是单值。
+2NF：在1NF基础上，所有非主属性必须依赖与所有主属性（主属性只有一个的1NF自动满足2NF）。
+3NF：在2NF基础上，所有非主属性必须独立的（单独的）直接依赖于主属性
