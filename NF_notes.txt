@@ -7,6 +7,12 @@ Good example : https://www.vertabelo.com/blog/boyce-codd-normal-form-bcnf/
 
 https://blog.csdn.net/qq_31780525/article/details/54416320
 
+The different normalizations:
+First Normal Form (1NF) : This should remove all the duplicate columns from the table. Creation of tables for the related data and identification of unique columns.
+Second Normal Form (2NF) : Meeting all requirements of the first normal form. Placing the subsets of data in separate tables and Creation of relationships between the tables using primary keys.
+Third Normal Form (3NF) : This should meet all requirements of 2NF. Removing the columns which are not dependent on primary key constraints.
+Fourth Normal Form (4NF) : Meeting all the requirements of third normal form and it should not have multi- valued dependencies.
+
 2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。
 3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。也就是说， 如果存在非主属性对于码的传递函数依赖，则不符合3NF的要求。
 

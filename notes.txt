@@ -2,20 +2,7 @@ SQL : SQL stands for ‘Structured Query Language’ and is used for communicati
 According to ANSI, SQL is the standard query language for Relational Database Management Systems (RDBMS) that is used for maintaining them and also for performing different operations of data manipulation on different types of data. 
 Basically, it is a database language that is used for the creation and deletion of databases, and it can be used to fetch and modify the rows of a table and also for multiple other things.
 
-WHERE : Row operations
-HAVING : Column operations
-
-Default constraint: It is used to define a default value for a column so that the default value will be added to all the new records if no other value is specified.
-create table mark(id int, name varchar(20), marks int default 50)
-
-Unique constraints: ensure that all the values in a column are different.
-create table mark(id int unique, name varchar(20))
-
-Primary Key : A primary key is used to uniquely identify all table records.
-CREATE TABLE mark(ID int NOT NULL, ... , PRIMARY KEY (ID));
-
-Find the second highest value : 
-select max(value) from mark where value not in (select max(value) from mark)
+PL/SQL is a procedural and application-oriented language.
 
 Explain the different types of SQL commands :
 --------------------------------
@@ -34,3 +21,81 @@ The commands that are used in DCL are Grant and Revoke.
 Transaction Control Language: It is used to control the changes made by DML commands. 
 It also authorizes the statements to assemble in conjunction into logical transactions. 
 The commands that are used in TCL are Commit, Rollback, Savepoint, Begin, and Transaction.
+
+WHERE : Row operations
+HAVING : Column operations
+
+Manipulation function :
+UPPER: It returns the string in uppercase : SELECT UPPER('string') from String;
+LOWER: It returns the string in lowercase : SELECT LOWER ('STRING') from String;
+INITCAP: It converts the first letter of the string to uppercase and retains others in lowercase : SELECT Initcap('dATASET') from String;
+CONCAT: It is used to concatenate two strings : SELECT CONCAT('Data','Science') from String;
+LENGTH: It is used to get the length of a string : SELECT LENGTH('Hello World') from String;
+STUFF: deletes a part of the string and then inserts another part into the string starting at a specified position : select stuff(‘SQL Tutorial’,1,3,’Python’) => Python Tutorial
+
+AUTO_INCREMENT is used in SQL to automatically generate a unique number whenever a new record is inserted into a table.
+CREATE TABLE mark(id int NOT NULL AUTO-INCREMENT, ... PRIMARY KEY (id));
+
+DELETE(DML command): This query is used to delete or remove one or more existing tables : Delete from mark where name='Tom';
+TRUNCATE(DDL command): This statement deletes all the data from inside a table. we can’t really execute and trigger. If a table is referenced by foreign key constraints, then TRUNCATE won’t work. Truncate table mark;
+
+COALESCE function takes a set of inputs and returns the first non-null value : SELECT COALESCE(NULL, 8, 'MYSQL'); => 8
+Normalization is used in reducing data redundancy and dependency by organizing fields and tables in databases.
+Denormalization is contrary to normalization.
+
+Default constraint: It is used to define a default value for a column so that the default value will be added to all the new records if no other value is specified.
+create table mark(id int, name varchar(20), marks int default 50)
+
+Unique constraints: ensure that all the values in a column are different.
+create table mark(id int unique, name varchar(20))
+
+Primary Key : A primary key is used to uniquely identify all table records.
+CREATE TABLE mark(ID int NOT NULL, ... , PRIMARY KEY (ID));
+Foreign Key ： A foreign key is an attribute or a set of attributes that references to the primary key of some other table.
+CREATE TABLE mark(ID int NOT NULL, ... , FOREIGN KEY (PID) REFERENCES Persons(PID));
+
+Index ： Indexes help speed up searching in the database. Indexes are used to find all rows matching with some columns and then to skim through only those subsets of the data to find the matches.
+CREATE INDEX INDEX_NAME ON TABLE_NAME (COLUMN)
+Types of Indexes :
+Single-column Indexes: A single-column index is created for only one column of a table : CREATE INDEX index_name ON table_name(column_name);
+Composite-column Indexes: A composite-column index is an index created for two or more columns of the table : CREATE INDEX index_name ON table_name (column1, column2);
+Unique Indexes: Unique indexes are used for maintaining the data integrity of the table.They don’t allow multiple values to be inserted into the table : CREATE UNIQUE INDEX index ON table_name(column_name);
+
+Clustered index: It is used to sort the rows of data by their key values.
+Non-clustered index: It stores data at one location and indexes at some other location. 
+
+Views are virtual tables used to limit the tables that we want to display, they take less space to store : create view female_employee as select * from employee where e_gender='Female';
+A stored procedure is a prepared SQL code that can be saved and reused :
+create procedure employee_age
+as
+select e_age from employee;
+go
+Now, we will execute it.
+exec employee_age
+A Temporary Table : it helps us store and process intermediate results:
+create table #book(b_id int, b_cost int);
+insert into #book values(1,100);
+select * from #book;
+
+The Join clause is used to combine rows from two or more tables based on a related column between them.
+Inner Join: Inner Join basically returns records that have matching values in both tables.
+Left Join: Left Join returns rows that are common between the tables and all the rows of the left-hand-side table.
+Right Join: Right Join returns rows that are common between the tables and all the rows of the right-hand-side table.
+Full Join: Full Join returns all the rows from the left-hand-side table and all the rows from the right-hand-side table.
+Self Join: Self Join in SQL is used for joining a table with itself.
+Union : The Union operator is used to combine the result set of two or more select statements.
+Union All : It gives all the records from both tables including the duplicates.
+Intersect : The Intersect operator helps combine two select statements and returns only those records that are common to both the select statements.
+
+OLTP: It basically stands for Online Transaction Processing and we can consider it to be a category of software applications that is efficient for supporting transaction-oriented programs. Its potentiality to keep up the consistency
+OLAP: OLAP stands for Online Analytical Processing and it is a category of software programs that are identified by a comparatively lower frequency of online transactions. The efficacy computing depends highly on the response time
+
+Examples : 
+Use having and group by :
+select e_gender, avg(e_age) from employee group by e_gender having avg(e_age)>30;
+
+Find the second highest value : 
+select max(value) from mark where value not in (select max(value) from mark);
+
+Copy the data into another table :
+Insert into employee_duplicate select * from employees
