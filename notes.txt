@@ -1,0 +1,36 @@
+SQL : SQL stands for ‘Structured Query Language’ and is used for communicating with the databases. 
+According to ANSI, SQL is the standard query language for Relational Database Management Systems (RDBMS) that is used for maintaining them and also for performing different operations of data manipulation on different types of data. 
+Basically, it is a database language that is used for the creation and deletion of databases, and it can be used to fetch and modify the rows of a table and also for multiple other things.
+
+WHERE : Row operations
+HAVING : Column operations
+
+Default constraint: It is used to define a default value for a column so that the default value will be added to all the new records if no other value is specified.
+create table mark(id int, name varchar(20), marks int default 50)
+
+Unique constraints: ensure that all the values in a column are different.
+create table mark(id int unique, name varchar(20))
+
+Primary Key : A primary key is used to uniquely identify all table records.
+CREATE TABLE mark(ID int NOT NULL, ... , PRIMARY KEY (ID));
+
+Find the second highest value : 
+select max(value) from mark where value not in (select max(value) from mark)
+
+Explain the different types of SQL commands :
+--------------------------------
+Data Definition Language: DDL is that part of SQL which defines the data structure of the database in the initial stage when the database is about to be created. 
+It is mainly used to create and restructure database objects. Commands in DDL are:
+Create table
+Alter table
+Drop table
+--------------------------------
+Data Manipulation Language: DML is used to manipulate the already existing data in the database. 
+That is, it helps users retrieve and manipulate the data. It is used to perform operations like inserting data into the database through the insert command, 
+updating the data with the update command, and deleting the data from the database through the delete command.
+--------------------------------
+Data Control Language: DCL is used to control access to the data in the database. DCL commands are normally used to create objects related to user access and also to control the distribution of privileges among users. 
+The commands that are used in DCL are Grant and Revoke.
+Transaction Control Language: It is used to control the changes made by DML commands. 
+It also authorizes the statements to assemble in conjunction into logical transactions. 
+The commands that are used in TCL are Commit, Rollback, Savepoint, Begin, and Transaction.
