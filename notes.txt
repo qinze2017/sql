@@ -92,10 +92,30 @@ OLAP: OLAP stands for Online Analytical Processing and it is a category of softw
 
 Examples : 
 Use having and group by :
-select e_gender, avg(e_age) from employee group by e_gender having avg(e_age)>30;
+select e_gender, avg(e_age) from employee 
+     group by e_gender 
+     having avg(e_age) > 30;
 
 Find the second highest value : 
-select max(value) from mark where value not in (select max(value) from mark);
+select max(value) from mark 
+    where value not in 
+      (select max(value) from mark);
 
 Copy the data into another table :
-Insert into employee_duplicate select * from employees
+Insert into employee_duplicate 
+    select * from employees
+
+Find the max count :
+select max(mycount) 
+    from (select agent_code, count(agent_code) mycount 
+    from orders 
+    group by agent_code);
+
+select agent_code, count(agent_code) 
+from orders group by agent_code 
+having count(agent_code)=( 
+select max(mycount) 
+from ( 
+select agent_code, count(agent_code) mycount 
+from orders 
+group by agent_code));
