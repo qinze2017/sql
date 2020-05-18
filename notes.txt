@@ -101,6 +101,12 @@ select max(value) from mark
     where value not in 
       (select max(value) from mark);
 
+Oracle :
+select min(m1.value) from 
+    (select distinct value from mark 
+       order by salary desc) as m1
+          where rownum <= 2;
+
 Copy the data into another table :
 Insert into employee_duplicate 
     select * from employees
@@ -112,10 +118,25 @@ select max(mycount)
     group by agent_code);
 
 select agent_code, count(agent_code) 
-from orders group by agent_code 
-having count(agent_code)=( 
-select max(mycount) 
-from ( 
-select agent_code, count(agent_code) mycount 
-from orders 
-group by agent_code));
+    from orders group by agent_code 
+      having count(agent_code) =
+        (select max(mycount) 
+           from (select agent_code, count(agent_code) mycount 
+                    from orders group by agent_code));
+
+Find duplicate rows :
+select * from mark m1 where id <> 
+        (select max(id) from mark m2 
+              where m1.num = m2.num);
+
+Find one row :
+select * from mark
+     where num > 2
+       LIMIT 1;
+
+Find the last one record :
+select * from mark where id = 
+     select max(id) from mark;
+
+Find the last five records :
+select * from mark order by id desc LIMIT 5;
